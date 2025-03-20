@@ -45,6 +45,7 @@ def main():
                     margin-bottom: 15px;">
                     <p style="font-size: 22px; font-weight: bold;">Entry {i+1+start_idx}</p>
                     <p><strong>Context:</strong> {row['context']}</p>
+                </div>
             """, unsafe_allow_html=True)
 
             # Two-column layout for Option A and B
@@ -69,42 +70,41 @@ def main():
                     </div>
                 """, unsafe_allow_html=True)
 
-            # **Metrics Section (Inside a Single Box)**
+            # **Metrics Section (Inside a Box)**
             st.markdown("""
                 <div style="
                     background-color: #f0e5f7; 
                     padding: 15px; 
                     border-radius: 10px;
                     margin-top: 10px;">
+                    <p style="font-size: 18px; font-weight: bold;">Evaluation Metrics</p>
             """, unsafe_allow_html=True)
 
-            # Evaluation Metrics Title
-            st.markdown("<p style='font-size: 18px; font-weight: bold; text-align: center;'>Evaluation Metrics</p>", unsafe_allow_html=True)
+            # 5-column layout for ratings
+            with st.container():  # Ensure it's inside the same container
+                col1, col2, col3, col4, col5 = st.columns(5)
+                with col1:
+                    st.session_state['df'].at[i, 'Prosociality'] = st.radio(
+                        "Prosociality", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Prosociality_{i}"
+                    )
+                with col2:
+                    st.session_state['df'].at[i, 'Engaged'] = st.radio(
+                        "Engaged", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Engaged_{i}"
+                    )
+                with col3:
+                    st.session_state['df'].at[i, 'Respect'] = st.radio(
+                        "Respect", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Respect_{i}"
+                    )
+                with col4:
+                    st.session_state['df'].at[i, 'Coherency'] = st.radio(
+                        "Coherency", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Coherency_{i}"
+                    )
+                with col5:
+                    st.session_state['df'].at[i, 'Overall'] = st.radio(
+                        "Overall", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Overall_{i}"
+                    )
 
-            # 5-column layout for ratings (INSIDE THE SAME CONTAINER)
-            col1, col2, col3, col4, col5 = st.columns(5)
-            with col1:
-                st.session_state['df'].at[i, 'Prosociality'] = st.radio(
-                    "Prosociality", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Prosociality_{i}"
-                )
-            with col2:
-                st.session_state['df'].at[i, 'Engaged'] = st.radio(
-                    "Engaged", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Engaged_{i}"
-                )
-            with col3:
-                st.session_state['df'].at[i, 'Respect'] = st.radio(
-                    "Respect", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Respect_{i}"
-                )
-            with col4:
-                st.session_state['df'].at[i, 'Coherency'] = st.radio(
-                    "Coherency", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Coherency_{i}"
-                )
-            with col5:
-                st.session_state['df'].at[i, 'Overall'] = st.radio(
-                    "Overall", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Overall_{i}"
-                )
-
-            # Close the metrics section (Ensuring Everything Is Inside)
+            # Close the metrics section
             st.markdown("</div>", unsafe_allow_html=True)
             st.write("---")  # Add separation between entries
 
