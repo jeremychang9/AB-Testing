@@ -72,7 +72,7 @@ def main():
         # Load data from the uploaded Excel file
         df_dict = load_data(uploaded_file)
         sheet_names = list(df_dict.keys())
-        selected_sheet = st.selectbox("Select a Comparison Group", sheet_names)
+        selected_sheet = st.selectbox("Select a comparison group:", sheet_names)
         df = df_dict[selected_sheet]
         
         # Initialize session state if it's not already set
