@@ -47,7 +47,7 @@ def main():
                     padding: 15px; 
                     border-radius: 8px; 
                     margin-bottom: 15px;">
-                    <p style="font-size: 22px; font-weight: bold;">Example {i+1+start_idx}</p>
+                    <p style="font-size: 22px; font-weight: bold;">Example {i+1}</p>
                     <p><strong>Context:</strong> {row['context']}</p>
                     <p><strong>RoT:</strong> {row['RoT']}</p>
                     <p><strong>Golden:</strong> {row['gold']}</p>
