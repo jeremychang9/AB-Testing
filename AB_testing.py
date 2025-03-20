@@ -102,12 +102,12 @@ def main():
                 st.write(f"### Entry {i+1+start_idx}")
                 st.write(f"**Context:** {row['context']}")
             
-            col1, col2 = st.columns(2)
-            with col1:
-                st.write(f"**Option A:** {row['A']}")
-            
-            with col2:
-                st.write(f"**Option B:** {row['B']}")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write(f"**Option A:** {row['A']}")
+                
+                with col2:
+                    st.write(f"**Option B:** {row['B']}")
             
             # Create a section for metrics
             st.markdown('<div class="metric-container">', unsafe_allow_html=True)
