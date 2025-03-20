@@ -27,7 +27,7 @@ def main():
 
         /* Section containers with background color */
         .section-container {
-            background-color: #ffffff;
+            background-color: #dcf2ec;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -83,7 +83,7 @@ def main():
         # Load data from the uploaded Excel file
         df_dict = load_data(uploaded_file)
         sheet_names = list(df_dict.keys())
-        selected_sheet = st.selectbox("Select a sheet", sheet_names)
+        selected_sheet = st.selectbox("Select a Comparison Group", sheet_names)
         df = df_dict[selected_sheet]
         
         # Initialize session state if it's not already set
@@ -109,8 +109,11 @@ def main():
         for i, row in df_page.iterrows():
             # Create a section for each sample entry
             st.markdown(f'<div class="section-container">', unsafe_allow_html=True)
-            st.write(f"### Entry {i+1+start_idx}")
-            st.write(f"**Context:** {row['context']}")
+            
+            # Wrap the Entry and Context inside the container
+            with st.container():
+                st.write(f"### Entry {i+1+start_idx}")
+                st.write(f"**Context:** {row['context']}")
             
             col1, col2 = st.columns(2)
             with col1:
@@ -133,7 +136,7 @@ def main():
                     key=f"Prosociality_{i}"
                 )
                 st.session_state['df'].at[i, 'Prosociality'] = prosociality
-            
+                        
             with col2:
                 engaged = st.radio(
                     f"Engaged (Entry {i+1+start_idx})",
