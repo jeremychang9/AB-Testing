@@ -29,13 +29,15 @@ def main():
                 st.session_state['df'][col] = None
 
         # Pagination settings
-        page_size = 5
+        page_size = 10
         total_pages = (len(st.session_state['df']) // page_size) + (1 if len(st.session_state['df']) % page_size != 0 else 0)
-        page_number = st.number_input("Page", min_value=1, max_value=total_pages, step=1, value=1)
+
+        # Page selection (TOP)
+        page_number = st.number_input("Page", min_value=1, max_value=total_pages, step=1, value=1, key="page_top")
 
         # Scroll to top when page changes
         st_javascript("window.scrollTo(0, 0)")
-        
+
         start_idx = (page_number - 1) * page_size
         end_idx = start_idx + page_size
         df_page = st.session_state['df'].iloc[start_idx:end_idx]
