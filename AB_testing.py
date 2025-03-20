@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_javascript import st_javascript
 import pandas as pd
 
 def load_data(file):
@@ -31,6 +32,10 @@ def main():
         page_size = 5
         total_pages = (len(st.session_state['df']) // page_size) + (1 if len(st.session_state['df']) % page_size != 0 else 0)
         page_number = st.number_input("Page", min_value=1, max_value=total_pages, step=1, value=1)
+
+        # Scroll to top when page changes
+        st_javascript("window.scrollTo(0, 0)")
+        
         start_idx = (page_number - 1) * page_size
         end_idx = start_idx + page_size
         df_page = st.session_state['df'].iloc[start_idx:end_idx]
@@ -104,6 +109,10 @@ def main():
             st.markdown("</div>", unsafe_allow_html=True)
             st.write("---")  # Add separation between entries
 
+       # Page selection (BOTTOM)
+        st.markdown("---")  # Separator
+        page_number = st.number_input("Page", min_value=1, max_value=total_pages, step=1, value=page_number, key="page_bottom")
+        
         # Save Annotations Button
         if st.button("Save Annotations"):
             output_path = "annotated_data.xlsx"
