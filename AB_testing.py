@@ -5,6 +5,9 @@ def load_data(file):
     return pd.read_excel(file, sheet_name=None)
 
 def main():
+    # Make the page wider
+    st.set_page_config(layout="wide")
+
     st.title("A/B Testing Annotation Tool")
 
     uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])
@@ -33,18 +36,43 @@ def main():
         df_page = st.session_state['df'].iloc[start_idx:end_idx]
 
         for i, row in df_page.iterrows():
-            # Expander for wider "Entry" and "Context"
-            with st.expander(f"### Entry {i+1+start_idx}", expanded=True):
-                st.write(f"**Context:** {row['context']}")
+            # Create a background color for Entry section
+            st.markdown(f"""
+                <div style="
+                    background-color: #f7e5d6; 
+                    padding: 15px; 
+                    border-radius: 8px; 
+                    margin-bottom: 15px;">
+                    <p style="font-size: 22px; font-weight: bold;">Entry {i+1+start_idx}</p>
+                    <p><strong>Context:</strong> {row['context']}</p>
+                </div>
+            """, unsafe_allow_html=True)
 
-                # Two-column layout for Option A and B
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.write(f"**Option A:** {row['A']}")
-                with col2:
-                    st.write(f"**Option B:** {row['B']}")
+            # Two-column layout for Option A and B
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"""
+                    <div style="
+                        background-color: #d6ecf7; 
+                        padding: 10px; 
+                        border-radius: 5px;">
+                        <strong>Option A:</strong> {row['A']}
+                    </div>
+                """, unsafe_allow_html=True)
 
-            # Metric ratings in a horizontal layout
+            with col2:
+                st.markdown(f"""
+                    <div style="
+                        background-color: #d6ecf7; 
+                        padding: 10px; 
+                        border-radius: 5px;">
+                        <strong>Option B:</strong> {row['B']}
+                    </div>
+                """, unsafe_allow_html=True)
+
+            # Create a section for metric ratings
+            st.markdown('<div style="background-color: #e3f2fd; padding: 10px; border-radius: 8px;">', unsafe_allow_html=True)
+            
             col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
                 st.session_state['df'].at[i, 'Prosociality'] = st.radio(
@@ -67,6 +95,7 @@ def main():
                     "Overall", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Overall_{i}"
                 )
 
+            st.markdown('</div>', unsafe_allow_html=True)  # End of metric section
             st.write("---")  # Add separation between entries
 
         # Save Annotations Button
