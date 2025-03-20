@@ -76,7 +76,7 @@ def main():
                     background-color: #f0e5f7; 
                     padding: 15px; 
                     border-radius: 10px;
-                    margin-top: 10px;">
+                    margin-top: 5px;">
                     <p style="font-size: 18px; font-weight: bold;">Evaluation Metrics</p>
             """, unsafe_allow_html=True)
 
