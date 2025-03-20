@@ -107,14 +107,6 @@ def main():
             # Close the metrics section
             st.markdown("</div>", unsafe_allow_html=True)
             st.write("---")  # Add separation between entries
-
-        # Page selection (BOTTOM) - Synchronizing with top selection
-        st.markdown("---")  # Separator
-        bottom_page = st.number_input(
-            "Page", min_value=1, max_value=total_pages, step=1,
-            value=st.session_state["page_number"], key="page_bottom",
-            on_change=change_page, args=(st.session_state["page_bottom"],)
-        )
         
         # Save Annotations Button
         if st.button("Save Annotations"):
