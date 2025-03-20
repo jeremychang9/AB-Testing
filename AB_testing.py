@@ -43,8 +43,10 @@ def main():
                     padding: 15px; 
                     border-radius: 8px; 
                     margin-bottom: 15px;">
-                    <p style="font-size: 22px; font-weight: bold;">Entry {i+1+start_idx}</p>
+                    <p style="font-size: 22px; font-weight: bold;">Example {i+1+start_idx}</p>
                     <p><strong>Context:</strong> {row['context']}</p>
+                    <p><strong>Context:</strong> {row['RoT']}</p>
+                    <p><strong>Context:</strong> {row['gold']}</p>
                 </div>
             """, unsafe_allow_html=True)
 
@@ -76,7 +78,7 @@ def main():
                     background-color: #f0e5f7; 
                     padding: 15px; 
                     border-radius: 10px;
-                    margin-top: 5px;">
+                    margin-top: 10px;">
                     <p style="font-size: 18px; font-weight: bold;">Evaluation Metrics</p>
             """, unsafe_allow_html=True)
 
