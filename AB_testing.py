@@ -5,7 +5,7 @@ def load_data(file):
     return pd.read_excel(file, sheet_name=None)
 
 def main():
-    # Make the page wider
+    # Expand page width
     st.set_page_config(layout="wide")
 
     st.title("A/B Testing Annotation Tool")
@@ -36,7 +36,7 @@ def main():
         df_page = st.session_state['df'].iloc[start_idx:end_idx]
 
         for i, row in df_page.iterrows():
-            # Create a background color for Entry section
+            # Create a section for each entry
             st.markdown(f"""
                 <div style="
                     background-color: #f7e5d6; 
@@ -70,32 +70,42 @@ def main():
                     </div>
                 """, unsafe_allow_html=True)
 
-            # Create a section for metric ratings
-            st.markdown('<div style="background-color: #e3f2fd; padding: 10px; border-radius: 8px;">', unsafe_allow_html=True)
-            
-            col1, col2, col3, col4, col5 = st.columns(5)
-            with col1:
-                st.session_state['df'].at[i, 'Prosociality'] = st.radio(
-                    "Prosociality", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Prosociality_{i}"
-                )
-            with col2:
-                st.session_state['df'].at[i, 'Engaged'] = st.radio(
-                    "Engaged", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Engaged_{i}"
-                )
-            with col3:
-                st.session_state['df'].at[i, 'Respect'] = st.radio(
-                    "Respect", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Respect_{i}"
-                )
-            with col4:
-                st.session_state['df'].at[i, 'Coherency'] = st.radio(
-                    "Coherency", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Coherency_{i}"
-                )
-            with col5:
-                st.session_state['df'].at[i, 'Overall'] = st.radio(
-                    "Overall", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Overall_{i}"
-                )
+            # **Metrics Section (Inside a Box)**
+            st.markdown("""
+                <div style="
+                    background-color: #f0e5f7; 
+                    padding: 15px; 
+                    border-radius: 10px;
+                    margin-top: 10px;">
+                    <p style="font-size: 18px; font-weight: bold;">Evaluation Metrics</p>
+            """, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)  # End of metric section
+            # 5-column layout for ratings
+            with st.container():  # Ensure it's inside the same container
+                col1, col2, col3, col4, col5 = st.columns(5)
+                with col1:
+                    st.session_state['df'].at[i, 'Prosociality'] = st.radio(
+                        "Prosociality", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Prosociality_{i}"
+                    )
+                with col2:
+                    st.session_state['df'].at[i, 'Engaged'] = st.radio(
+                        "Engaged", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Engaged_{i}"
+                    )
+                with col3:
+                    st.session_state['df'].at[i, 'Respect'] = st.radio(
+                        "Respect", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Respect_{i}"
+                    )
+                with col4:
+                    st.session_state['df'].at[i, 'Coherency'] = st.radio(
+                        "Coherency", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Coherency_{i}"
+                    )
+                with col5:
+                    st.session_state['df'].at[i, 'Overall'] = st.radio(
+                        "Overall", ["Option A wins", "Tie", "Option B wins"], index=1, key=f"Overall_{i}"
+                    )
+
+            # Close the metrics section
+            st.markdown("</div>", unsafe_allow_html=True)
             st.write("---")  # Add separation between entries
 
         # Save Annotations Button
