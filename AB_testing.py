@@ -32,26 +32,10 @@ def main():
         page_size = 5
         total_pages = (len(st.session_state['df']) // page_size) + (1 if len(st.session_state['df']) % page_size != 0 else 0)
 
-        # Initialize page state if not set
-        if "page_number" not in st.session_state:
-            st.session_state["page_number"] = 1
-
-        # Function to change page and scroll to top
-        def change_page(new_page):
-            st.session_state["page_number"] = new_page
-            st.experimental_rerun()  # Refresh the app
-
         # Page selection (TOP)
-        top_page = st.number_input(
-            "Page", min_value=1, max_value=total_pages, step=1,
-            value=st.session_state["page_number"], key="page_top",
-            on_change=change_page, args=(st.session_state["page_top"],)
-        )
+        page_number = st.number_input("Page", min_value=1, max_value=total_pages, step=1, value=1, key="page_top")
 
-        # Scroll to top when page changes
-        st_javascript("window.scrollTo(0, 0)")
-
-        start_idx = (st.session_state["page_number"] - 1) * page_size
+        start_idx = (page_number - 1) * page_size
         end_idx = start_idx + page_size
         df_page = st.session_state['df'].iloc[start_idx:end_idx]
 
