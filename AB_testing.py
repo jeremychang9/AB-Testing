@@ -41,8 +41,8 @@ def main():
             margin-bottom: 10px;
         }
 
-        /* Save and Download buttons */
-        .save-button {
+        /* Styling for Save and Download buttons */
+        .stButton > button {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -51,21 +51,8 @@ def main():
             text-align: center;
         }
 
-        .save-button:hover {
+        .stButton > button:hover {
             background-color: #45a049;
-        }
-
-        .download-button {
-            background-color: #3b82f6;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .download-button:hover {
-            background-color: #2563eb;
         }
 
         /* Add some margin to the input elements */
@@ -145,7 +132,7 @@ def main():
                     key=f"Engaged_{i}"
                 )
                 st.session_state['df'].at[i, 'Engaged'] = engaged
-            
+           
             with col3:
                 respect = st.radio(
                     f"Respect (Entry {i+1+start_idx})",
