@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_javascript import st_javascript
+import streamlit.components.v1 as components
 import pandas as pd
 
 def load_data(file):
@@ -107,6 +107,17 @@ def main():
             # Close the metrics section
             st.markdown("</div>", unsafe_allow_html=True)
             st.write("---")  # Add separation between entries
+
+        # Scroll-to-Top Button
+        if st.button("Scroll to Top 🔝"):
+            components.html(
+                """
+                <script>
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                </script>
+                """,
+                height=0,
+            )
         
         # Save Annotations Button
         if st.button("Save Annotations"):
