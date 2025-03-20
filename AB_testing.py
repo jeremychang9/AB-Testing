@@ -108,6 +108,9 @@ def main():
             with col2:
                 st.write(f"**Option B:** {row['B']}")
             
+            # Close the section container
+            st.markdown('</div>', unsafe_allow_html=True)
+
             # Create a section for metrics
             st.markdown('<div class="metric-container">', unsafe_allow_html=True)
 
@@ -160,7 +163,6 @@ def main():
                 st.session_state['df'].at[i, 'Overall'] = overall
 
             st.markdown('</div>', unsafe_allow_html=True)  # End of metric container
-            st.markdown('</div>', unsafe_allow_html=True)  # End of sample section
 
         # Save button with custom styling
         st.markdown('<button class="save-button">Save Annotations</button>', unsafe_allow_html=True)
