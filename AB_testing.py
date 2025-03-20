@@ -29,7 +29,7 @@ def main():
                 st.session_state['df'][col] = None
 
         # Pagination settings
-        page_size = 10
+        page_size = 5
         total_pages = (len(st.session_state['df']) // page_size) + (1 if len(st.session_state['df']) % page_size != 0 else 0)
 
         # Page selection (TOP)
