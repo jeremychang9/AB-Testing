@@ -28,7 +28,7 @@ def main():
         /* Section containers with background color */
         .section-container {
             background-color: #dcf2ec;
-            padding: 30px;  /* Increased padding for wider space */
+            padding: 60px;  /* Increased padding for wider space */
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
