@@ -27,8 +27,6 @@ def main():
         for col in ['Prosociality', 'Engaged', 'Respect', 'Coherency', 'Overall']:
             if col not in st.session_state['df']:
                 st.session_state['df'][col] = None
-            else:
-                st.session_state['df'][col].fillna(None, inplace=True)
 
         # Pagination settings
         page_size = 10
