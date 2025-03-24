@@ -2,3 +2,4 @@ streamlit
 streamlit-javascript
 pandas
 openpyxl
+xlsxwriter
