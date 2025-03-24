@@ -23,10 +23,12 @@ def main():
         if 'df' not in st.session_state:
             st.session_state['df'] = df.copy()
 
-        # Ensure annotation columns exist
+        # Ensure annotation columns exist without overwriting existing values
         for col in ['Prosociality', 'Engaged', 'Respect', 'Coherency', 'Overall']:
             if col not in st.session_state['df']:
                 st.session_state['df'][col] = None
+            else:
+                st.session_state['df'][col].fillna(None, inplace=True)
 
         # Pagination settings
         page_size = 10
@@ -83,26 +85,14 @@ def main():
             # 5-column layout for ratings
             with st.container():  # Ensure it's inside the same container
                 col1, col2, col3, col4, col5 = st.columns(5)
-                with col1:
-                    st.session_state['df'].at[i, 'Prosociality'] = st.radio(
-                        "Prosociality", ["Option A", "Tie", "Option B"], index=1, key=f"Prosociality_{i}"
-                    )
-                with col2:
-                    st.session_state['df'].at[i, 'Engaged'] = st.radio(
-                        "Engaged", ["Option A", "Tie", "Option B"], index=1, key=f"Engaged_{i}"
-                    )
-                with col3:
-                    st.session_state['df'].at[i, 'Respect'] = st.radio(
-                        "Respect", ["Option A", "Tie", "Option B"], index=1, key=f"Respect_{i}"
-                    )
-                with col4:
-                    st.session_state['df'].at[i, 'Coherency'] = st.radio(
-                        "Coherency", ["Option A", "Tie", "Option B"], index=1, key=f"Coherency_{i}"
-                    )
-                with col5:
-                    st.session_state['df'].at[i, 'Overall'] = st.radio(
-                        "Overall", ["Option A", "Tie", "Option B"], index=1, key=f"Overall_{i}"
-                    )
+                for col_name, col_widget in zip(['Prosociality', 'Engaged', 'Respect', 'Coherency', 'Overall'], [col1, col2, col3, col4, col5]):
+                    with col_widget:
+                        default_index = 1  # Default to "Tie"
+                        if pd.notna(row[col_name]) and row[col_name] in ["Option A", "Tie", "Option B"]:
+                            default_index = ["Option A", "Tie", "Option B"].index(row[col_name])
+                        st.session_state['df'].at[i, col_name] = st.radio(
+                            col_name, ["Option A", "Tie", "Option B"], index=default_index, key=f"{col_name}_{i}"
+                        )
 
             # Close the metrics section
             st.markdown("</div>", unsafe_allow_html=True)
