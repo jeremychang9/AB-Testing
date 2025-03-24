@@ -16,14 +16,16 @@ def main():
     if uploaded_file:
         df_dict = load_data(uploaded_file)
         sheet_names = list(df_dict.keys())
-        selected_sheet = st.selectbox("Select a Comparison Group", sheet_names)
-        df = df_dict[selected_sheet]
-
-        # Initialize session state
-        if 'df_dict' not in st.session_state:
+        selected_sheet = st.selectbox("Select a Comparison Group", sheet_names, key="selected_sheet")
+        
+        # Update session state when selecting a new sheet
+        if 'df_dict' not in st.session_state or st.session_state.get("uploaded_file") != uploaded_file:
             st.session_state['df_dict'] = df_dict.copy()
-        if 'df' not in st.session_state:
-            st.session_state['df'] = df.copy()
+            st.session_state['uploaded_file'] = uploaded_file
+
+        if 'df' not in st.session_state or st.session_state.get("current_sheet") != selected_sheet:
+            st.session_state['df'] = st.session_state['df_dict'][selected_sheet].copy()
+            st.session_state['current_sheet'] = selected_sheet
 
         # Ensure annotation columns exist without overwriting existing values
         for col in ['Prosociality', 'Engaged', 'Respect', 'Coherency', 'Overall']:
