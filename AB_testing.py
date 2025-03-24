@@ -20,6 +20,8 @@ def main():
         df = df_dict[selected_sheet]
 
         # Initialize session state
+        if 'df_dict' not in st.session_state:
+            st.session_state['df_dict'] = df_dict.copy()
         if 'df' not in st.session_state:
             st.session_state['df'] = df.copy()
 
@@ -99,7 +101,11 @@ def main():
         # Save Annotations Button
         if st.button("Save Annotations"):
             output_path = "annotated_data.xlsx"
-            st.session_state['df'].to_excel(output_path, index=False)
+            st.session_state['df_dict'][selected_sheet] = st.session_state['df']  # Save modified sheet back to dictionary
+            with pd.ExcelWriter(output_path, engine='xlsxwriter') as writer:
+                for sheet_name, sheet_df in st.session_state['df_dict'].items():
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
             st.success(f"Annotations saved to {output_path}")
 
             with open(output_path, "rb") as file:
