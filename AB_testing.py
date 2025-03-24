@@ -110,6 +110,17 @@ def main():
 
             with open(output_path, "rb") as file:
                 st.download_button("Download Annotated File", file, "annotated_data.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            
+            # Compute and display average results
+            avg_results = {}
+            for col in ['Prosociality', 'Engaged', 'Respect', 'Coherency', 'Overall']:
+                avg_results[col] = st.session_state['df'][col].value_counts(normalize=True).to_dict()
+            
+            st.markdown("### Average Annotation Results")
+            for metric, values in avg_results.items():
+                st.write(f"**{metric}:**")
+                for option, percentage in values.items():
+                    st.write(f"- {option}: {percentage:.2%}")
 
 if __name__ == "__main__":
     main()
